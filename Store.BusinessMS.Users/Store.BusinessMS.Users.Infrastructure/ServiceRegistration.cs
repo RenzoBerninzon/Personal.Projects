@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Store.BusinessMS.Users.Application.Interfaces.Repositories;
 using Store.BusinessMS.Users.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Store.BusinessMS.Users.Domain.User;
 
 namespace Store.BusinessMS.Users.Infrastructure
 {
@@ -29,6 +31,7 @@ namespace Store.BusinessMS.Users.Infrastructure
             });
 
             services.AddScoped<DbContext>(provider => provider.GetRequiredService<StoreDbContext>());
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<StoreDbContext>().AddDefaultTokenProviders();
 
             #region Repositories
             services.AddTransient(typeof(IGenericRepository<Otp>), typeof(GenericRepository<Otp, StoreDbContext>));

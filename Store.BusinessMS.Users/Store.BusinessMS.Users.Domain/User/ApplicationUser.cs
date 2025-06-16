@@ -1,11 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace Store.BusinessMS.Users.Domain.User
 {
-    public partial class ApplicationUser
+    public partial class ApplicationUser : IdentityUser
     {
-        public string? Id { get; set; }
-        public string? Email { get; set; }
         public string? Name { get; set; }
         public string? LastName { get; set; }
         public string? MothersLastName { get; set; }

@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Store.BusinessMS.Users.Application.Query.GetById
+namespace Store.BusinessMS.Users.Application.Query
 {
-    public class GetById
+    public class GetUserById
     {
         public class Query : IRequest<GetByIdDto>
         {
@@ -26,11 +26,11 @@ namespace Store.BusinessMS.Users.Application.Query.GetById
 
         public class Handler : IRequestHandler<Query, GetByIdDto>
         {
-            private readonly ILogger<GetById> _logger;
+            private readonly ILogger<GetUserById> _logger;
             private readonly IMapper _mapper;
             private readonly IUserRepository _userRepository;
 
-            public Handler(ILogger<GetById> logger, IMapper mapper, IUserRepository userRepository)
+            public Handler(ILogger<GetUserById> logger, IMapper mapper, IUserRepository userRepository)
             {
                 _userRepository = userRepository;
                 _logger = logger;

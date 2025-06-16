@@ -7,7 +7,7 @@ using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Store.BusinessMS.Users.Application.Dtos;
-using Store.BusinessMS.Users.Application.Query.GetById;
+using Store.BusinessMS.Users.Application.Query;
 using System.Net;
 using Store.BusinessMS.Users.Application.Wrappers;
 using Store.BusinessMS.Users.Application.Query.GetUsers;
@@ -16,6 +16,8 @@ using Store.BusinessMS.Users.Application.Command.CreateOtp.Response;
 using Store.BusinessMS.Users.Application.Command.CreateOtp;
 using System.Collections.Specialized;
 using Store.BusinessMS.Users.Application.Core;
+using Store.BusinessMS.Users.Application.Command.RegisterUser.Request;
+using Store.BusinessMS.Users.Application.Commands.RegisterUser;
 
 namespace Store.BusinessMS.Users.Functions;
 
@@ -32,12 +34,25 @@ public class UsersFunction
         _logger = loggerFactory.CreateLogger<UsersFunction>();
     }
 
+    [Function("RegisterUser")]
+    public async Task<HttpResponseData> RegisterUser(
+    [HttpTrigger(AuthorizationLevel.Function, "post", Route = "users/register")] HttpRequestData httpRequest)
+    {
+        var requestBody = await httpRequest.ReadAsStringAsync();
+        var request = JsonConvert.DeserializeObject<RegisterUserRequest>(requestBody);
+        var command = new RegisterUser.Command(request);
+        var result = await _mediator.Send(command);
+        var response = httpRequest.CreateResponse(HttpStatusCode.Created);
+        await response.WriteAsJsonAsync(result);
+        return response;
+    }
+
     [Function("GetUserById")]
-    public async Task<HttpResponseData> GetById(
+    public async Task<HttpResponseData> GetUserById(
     [HttpTrigger(AuthorizationLevel.Function, "get", Route = "users/{id}")] HttpRequestData httpRequest, string id)
     {
         var httpResponse = httpRequest.CreateResponse(HttpStatusCode.OK);
-        var responseData = Response<GetByIdDto>.Success(await _mediator.Send(new GetById.Query(id)));
+        var responseData = Response<GetByIdDto>.Success(await _mediator.Send(new GetUserById.Query(id)));
         var jsonResponse = JsonConvert.SerializeObject(responseData, Formatting.Indented);
         await httpResponse.WriteStringAsync(jsonResponse);
         return httpResponse;

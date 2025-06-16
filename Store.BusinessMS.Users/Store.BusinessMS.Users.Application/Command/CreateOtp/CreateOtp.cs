@@ -4,11 +4,6 @@ using Store.BusinessMS.Users.Application.Dtos;
 using Store.BusinessMS.Users.Application.Interfaces.Repositories;
 using Store.BusinessMS.Users.Domain.Otp;
 using Store.BusinessMS.Users.Domain.User;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Store.BusinessMS.Users.Application.Command.CreateOtp
 {

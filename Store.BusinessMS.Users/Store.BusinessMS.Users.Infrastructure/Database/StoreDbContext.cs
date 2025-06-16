@@ -20,6 +20,7 @@ namespace Store.BusinessMS.Users.Infrastructure.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
 
