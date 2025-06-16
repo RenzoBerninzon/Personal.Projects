@@ -23,7 +23,7 @@ namespace Store.Database.Domain.Payments
         public decimal Amount { get; set; }
         public bool IsConfirmed { get; set; } = false;
         public string TransactionId { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime ConfirmedOn { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? ConfirmedOn { get; set; }
     }
 }

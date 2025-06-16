@@ -18,6 +18,6 @@ namespace Store.Database.Domain.Catalogs
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
         public int QuantityInStock { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public DateTime? LastUpdated { get; set; }
     }
 }

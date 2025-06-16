@@ -19,6 +19,11 @@ namespace Store.Database.Domain.Customers
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        public string? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser? User { get; set; }
+
         public DateTime BirthDate { get; set; }
 
         public DocType DocType { get; set; }
@@ -35,8 +40,6 @@ namespace Store.Database.Domain.Customers
 
         public string Address { get; set; }
 
-        public string State { get; set; }
-
         public int CountryId { get; set; }
 
         [ForeignKey("CountryId")]
@@ -44,9 +47,9 @@ namespace Store.Database.Domain.Customers
 
         public string PhoneNumber { get; set; }
 
-        public DateTime CreatedOn { set; get; }
+        public DateTime? CreatedOn { set; get; }
 
-        public DateTime UpdatedOn { set; get; }
+        public DateTime? UpdatedOn { set; get; }
 
         public string Email { get; set; }
 

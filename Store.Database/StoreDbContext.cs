@@ -62,10 +62,10 @@ namespace Store.Database
                 .IsUnique()
                 .HasDatabaseName("IX_DocID");
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasOne(u => u.Customer)
-                .WithOne()
-                .HasForeignKey<ApplicationUser>(u => u.CustomerId)
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.User)
+                .WithOne(u => u.Customer)
+                .HasForeignKey<Customer>(c => c.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ApplicationUser>()
@@ -100,7 +100,7 @@ namespace Store.Database
                 .HasForeignKey(p => p.PaymentMethodId);
 
             modelBuilder.Entity<Otp>()
-                .HasOne(o => o.Users)
+                .HasOne(o => o.User)
                 .WithOne()
                 .HasForeignKey<Otp>(o => o.UserId)
                 .IsRequired();

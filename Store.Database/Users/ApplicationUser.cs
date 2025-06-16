@@ -14,7 +14,6 @@ namespace Store.Database.Users
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
-        public string Email {  get; set; }
         public string LastName { get; set; }
         public string MothersLastName { get; set; }
         public string DocNumber { get; set; }
@@ -22,18 +21,14 @@ namespace Store.Database.Users
         public int DocTypeId { get; set; }
         [ForeignKey("DocTypeId")]
         public DocType DocType { get; set; }
-
-        public int CustomerId { get; set; }
-        [ForeignKey("CustomerId")]
-        public Customer Customer { get; set; }
-
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public Customer? Customer { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public DateTime? UpdatedOn { get; set; }
         public bool HasBoughtProducts { get; set; }
-        public string UtmSource { get; set; }
-        public string UtmMedium { get; set; }
-        public string UtmCampaign { get; set; }
-        public string UtmTerm { get; set; }
-        public string UtmContent { get; set; }
+        public string? UtmSource { get; set; }
+        public string? UtmMedium { get; set; }
+        public string? UtmCampaign { get; set; }
+        public string? UtmTerm { get; set; }
+        public string? UtmContent { get; set; }
     }
 }

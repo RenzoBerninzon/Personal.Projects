@@ -16,8 +16,8 @@ namespace Store.Database.Domain.Coupons
         public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
-        public DateTime AvailableFrom { get; set; }
-        public DateTime AvailableTo { get; set; }
+        public DateTime? AvailableFrom { get; set; }
+        public DateTime? AvailableTo { get; set; }
         public decimal Percentage { get; set; }
         public bool IsActive { get; set; }
         public int ProductId { get; set; }
