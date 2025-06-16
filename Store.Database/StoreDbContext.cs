@@ -10,6 +10,7 @@ using Store.Database.Domain.Payments;
 using Store.Database.Domain.Catalogs;
 using Store.Database.Domain.Coupons;
 using Store.Database.Domain.Payments;
+using Store.Database.Domain.Otps;
 
 namespace Store.Database
 {
@@ -20,6 +21,7 @@ namespace Store.Database
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Otp> Otps { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<DocType> DocTypes { get; set; }
@@ -41,6 +43,8 @@ namespace Store.Database
 
             modelBuilder.Entity<Order>().ToTable("Orders", "Order");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetails", "Order");
+
+            modelBuilder.Entity<OrderDetail>().ToTable("Otps", "Otp");
 
             modelBuilder.Entity<Payment>().ToTable("Payments", "Payment");
             modelBuilder.Entity<PaymentMethod>().ToTable("PaymentMethods", "Payment");
@@ -85,6 +89,12 @@ namespace Store.Database
                 .HasOne(p => p.PaymentMethod)
                 .WithMany()
                 .HasForeignKey(p => p.PaymentMethodId);
+
+            modelBuilder.Entity<Otp>()
+                .HasOne(o => o.Users)
+                .WithOne()
+                .HasForeignKey<Otp>(o => o.UserId)
+                .IsRequired();
         }
     }
 }
