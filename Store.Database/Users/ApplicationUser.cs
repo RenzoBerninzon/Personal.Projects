@@ -14,6 +14,7 @@ namespace Store.Database.Users
     public class ApplicationUser : IdentityUser
     {
         public string Name { get; set; }
+        public string Email {  get; set; }
         public string LastName { get; set; }
         public string MothersLastName { get; set; }
         public string DocNumber { get; set; }
