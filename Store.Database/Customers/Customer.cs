@@ -42,11 +42,6 @@ namespace Store.Database.Domain.Customers
         [ForeignKey("CountryId")]
         public Country Country { get; set; }
 
-        public int NationalityId { get; set; }
-
-        [ForeignKey("NationalityId")]
-        public Country Nationality { get; set; }
-
         public string PhoneNumber { get; set; }
 
         public DateTime CreatedOn { set; get; }

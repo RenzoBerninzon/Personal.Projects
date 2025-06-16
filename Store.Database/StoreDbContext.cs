@@ -16,6 +16,9 @@ namespace Store.Database
 {
     public class StoreDbContext : IdentityDbContext<ApplicationUser>
     {
+        public StoreDbContext(DbContextOptions<StoreDbContext> options)
+            : base(options) { }
+
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
@@ -44,7 +47,7 @@ namespace Store.Database
             modelBuilder.Entity<Order>().ToTable("Orders", "Order");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetails", "Order");
 
-            modelBuilder.Entity<OrderDetail>().ToTable("Otps", "Otp");
+            modelBuilder.Entity<Otp>().ToTable("Otps", "Otp");
 
             modelBuilder.Entity<Payment>().ToTable("Payments", "Payment");
             modelBuilder.Entity<PaymentMethod>().ToTable("PaymentMethods", "Payment");
@@ -63,7 +66,13 @@ namespace Store.Database
                 .HasOne(u => u.Customer)
                 .WithOne()
                 .HasForeignKey<ApplicationUser>(u => u.CustomerId)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasOne<DocType>()
+                .WithMany()
+                .HasForeignKey(u => u.DocTypeId)
+                .OnDelete(DeleteBehavior.Restrict); 
 
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderDetails)
@@ -95,6 +104,12 @@ namespace Store.Database
                 .WithOne()
                 .HasForeignKey<Otp>(o => o.UserId)
                 .IsRequired();
+
+            modelBuilder.Entity<Customer>()
+                .HasOne(c => c.Country)
+                .WithMany()
+                .HasForeignKey(c => c.CountryId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
