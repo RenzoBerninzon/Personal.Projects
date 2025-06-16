@@ -12,7 +12,6 @@ namespace Store.BusinessMS.Users.Domain.User
         public string? DocNumber { get; set; }
         public string? Gender { get; set; }
         public int DocTypeId { get; set; }
-        public int? CustomerId { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? UpdatedOn { get; set; }
         public bool HasBoughtProducts { get; set; }

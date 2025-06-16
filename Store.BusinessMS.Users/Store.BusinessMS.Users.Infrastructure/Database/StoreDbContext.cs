@@ -23,8 +23,6 @@ namespace Store.BusinessMS.Users.Infrastructure.Database
             modelBuilder.Entity<ApplicationUser>(entity =>
             {
 
-                entity.HasIndex(e => e.CustomerId, "IX_CustomerId");
-
                 entity.HasIndex(e => e.DocTypeId, "IX_DocTypeId");
 
                 entity.Property(e => e.Id).HasMaxLength(128);
@@ -47,6 +45,8 @@ namespace Store.BusinessMS.Users.Infrastructure.Database
 
             modelBuilder.Entity<Otp>(entity =>
             {
+                entity.ToTable("Otps", "Otp");
+
                 entity.HasIndex(e => new { e.UserId })
                     .IsUnique();
 

@@ -14,6 +14,8 @@ using Store.BusinessMS.Users.Application.Query.GetUsers;
 using System.Web;
 using Store.BusinessMS.Users.Application.Command.CreateOtp.Response;
 using Store.BusinessMS.Users.Application.Command.CreateOtp;
+using System.Collections.Specialized;
+using Store.BusinessMS.Users.Application.Core;
 
 namespace Store.BusinessMS.Users.Functions;
 
@@ -36,19 +38,30 @@ public class UsersFunction
     {
         var httpResponse = httpRequest.CreateResponse(HttpStatusCode.OK);
         var responseData = Response<GetByIdDto>.Success(await _mediator.Send(new GetById.Query(id)));
-        var jsonResponse = JsonConvert.SerializeObject(responseData);
+        var jsonResponse = JsonConvert.SerializeObject(responseData, Formatting.Indented);
         await httpResponse.WriteStringAsync(jsonResponse);
         return httpResponse;
     }
 
-    [Function("GetUsers")]
+    [Function("GetAllUsers")]
     public async Task<HttpResponseData> GetUsers(
-    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "users/")] HttpRequestData httpRequest, string docNumber)
+    [HttpTrigger(AuthorizationLevel.Function, "get", Route = "users")] HttpRequestData httpRequest)
     {
-        docNumber = HttpUtility.UrlEncode(docNumber);
+        NameValueCollection query = HttpUtility.ParseQueryString(httpRequest.Url.Query);
+
+        int pageNumber = !string.IsNullOrEmpty(query["pageNumber"]) ? int.Parse(query["pageNumber"]!) : 1;
+        int pageSize = !string.IsNullOrEmpty(query["pageSize"]) ? int.Parse(query["pageSize"]!) : 15;
+
         var httpResponse = httpRequest.CreateResponse(HttpStatusCode.OK);
-        var responseData = Response<List<UserDto>>.Success(await _mediator.Send(new GetUsers.Query(docNumber)));
-        var jsonResponse = JsonConvert.SerializeObject(responseData);
+
+        var result = await _mediator.Send(new GetUsers.Query
+        {
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        });
+
+        var responseData = Response<PagedList<UserDto>>.Success(result);
+        var jsonResponse = JsonConvert.SerializeObject(responseData, Formatting.Indented);
         await httpResponse.WriteStringAsync(jsonResponse);
         return httpResponse;
     }
@@ -57,11 +70,11 @@ public class UsersFunction
     public async Task<HttpResponseData> CreateOtp(
      [HttpTrigger(AuthorizationLevel.Function, "post", Route = "users/createOtp/")] HttpRequestData httpRequest)
     {
-        var requestData = await new System.IO.StreamReader(httpRequest.Body).ReadToEndAsync();
+        var requestData = await new StreamReader(httpRequest.Body).ReadToEndAsync();
         var dto = JsonConvert.DeserializeObject<OtpDto>(requestData);
         var httpResponse = httpRequest.CreateResponse(HttpStatusCode.OK);
         var responseData = Response<ResponseOtp>.Success(await _mediator.Send(new CreateOtp.Command(dto)));
-        var jsonResponse = JsonConvert.SerializeObject(responseData);
+        var jsonResponse = JsonConvert.SerializeObject(responseData, Formatting.Indented);
         await httpResponse.WriteStringAsync(jsonResponse);
         return httpResponse;
     }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Store.BusinessMS.Users.Domain.User;
 using Store.BusinessMS.Users.Infrastructure.Database;
 using Store.BusinessMS.Users.Application.Interfaces.Repositories;
+using Store.BusinessMS.Users.Application.Core;
 
 namespace Store.BusinessMS.Users.Infrastructure.Repositories
 {
@@ -18,17 +19,19 @@ namespace Store.BusinessMS.Users.Infrastructure.Repositories
             _logger = logger.CreateLogger<UserRepository>();
         }
 
-        public async Task<List<ApplicationUser?>> GetUsers(string? docNumber)
+        public async Task<PagedList<ApplicationUser>> GetAllUsers(int pageNumber, int pageSize)
         {
-            var query = _aspNetUsers.AsNoTracking().AsQueryable();
+            var query = _aspNetUsers.AsNoTracking();
 
-            if (!string.IsNullOrEmpty(docNumber))
-            {
-                query = query.Where(u => u.DocNumber == docNumber);
-            }
+            var total = await query.CountAsync();
 
-            var response = await query.ToListAsync();
-            return response;
+            var items = await query
+                .OrderBy(u => u.Id)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedList<ApplicationUser>(items, pageNumber, pageSize, total);
         }
 
         public async Task<ApplicationUser?> GetById(string id)

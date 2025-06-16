@@ -16,7 +16,7 @@ namespace Store.Database.Domain.Otps
         public int Id { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]
-        public ApplicationUser Users { get; set; }
+        public ApplicationUser User { get; set; }
         [StringLength(20)]
         public string Code { get; set; }
         public DateTime? CreatedOn { get; set; }
