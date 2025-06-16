@@ -69,10 +69,10 @@ namespace Store.Database
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<ApplicationUser>()
-                .HasOne<DocType>()
+                .HasOne(u => u.DocType)
                 .WithMany()
                 .HasForeignKey(u => u.DocTypeId)
-                .OnDelete(DeleteBehavior.Restrict); 
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderDetails)

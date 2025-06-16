@@ -28,6 +28,8 @@ namespace Store.BusinessMS.Users.Infrastructure
                    });
             });
 
+            services.AddScoped<DbContext>(provider => provider.GetRequiredService<StoreDbContext>());
+
             #region Repositories
             services.AddTransient(typeof(IGenericRepository<Otp>), typeof(GenericRepository<Otp, StoreDbContext>));
             services.AddTransient<IUserRepository, UserRepository>();

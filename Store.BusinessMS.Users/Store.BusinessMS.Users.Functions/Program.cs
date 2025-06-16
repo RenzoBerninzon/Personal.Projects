@@ -11,6 +11,8 @@ var builder = FunctionsApplication.CreateBuilder(args);
 
 builder.ConfigureFunctionsWebApplication();
 
+builder.Services.AddSingleton<Azure.Core.Serialization.NewtonsoftJsonObjectSerializer>();
+
 var sqlConnectionString = builder.Configuration.GetConnectionString("SqlConnectionString") ?? Environment.GetEnvironmentVariable("SqlConnectionString");
 
 builder.Services.AddPersistenceInfrastructure(sqlConnectionString);
