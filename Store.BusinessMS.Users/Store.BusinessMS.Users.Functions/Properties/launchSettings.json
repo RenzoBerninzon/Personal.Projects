@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Store.BusinessMS.Users.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7209",
+      "launchBrowser": false
+    }
+  }
+}
