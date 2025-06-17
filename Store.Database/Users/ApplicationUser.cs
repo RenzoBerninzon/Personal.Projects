@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Store.Database.Domain.Parameters;
 using Store.Database.Domain.Customers;
+using Store.Database.Domain.Otps;
 
 namespace Store.Database.Users
 {
@@ -30,5 +31,6 @@ namespace Store.Database.Users
         public string? UtmCampaign { get; set; }
         public string? UtmTerm { get; set; }
         public string? UtmContent { get; set; }
+        public ICollection<Otp> Otps { get; set; }
     }
 }

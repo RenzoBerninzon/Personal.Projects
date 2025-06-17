@@ -101,8 +101,8 @@ namespace Store.Database
 
             modelBuilder.Entity<Otp>()
                 .HasOne(o => o.User)
-                .WithOne()
-                .HasForeignKey<Otp>(o => o.UserId)
+                .WithMany(u => u.Otps)
+                .HasForeignKey(o => o.UserId)
                 .IsRequired();
 
             modelBuilder.Entity<Customer>()
