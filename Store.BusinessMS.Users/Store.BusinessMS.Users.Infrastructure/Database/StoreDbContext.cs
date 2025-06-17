@@ -16,7 +16,7 @@ namespace Store.BusinessMS.Users.Infrastructure.Database
         }
 
         public virtual DbSet<ApplicationUser> AspNetUsers { get; set; } = null!;
-        public virtual DbSet<Otp> OTP { get; set; } = null!;
+        public virtual DbSet<Otp> Otp { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -34,6 +34,7 @@ namespace Store.BusinessMS.Users.Infrastructure
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<StoreDbContext>().AddDefaultTokenProviders();
 
             #region Repositories
+            services.AddTransient(typeof(IGenericRepository<ApplicationUser>), typeof(GenericRepository<ApplicationUser, StoreDbContext>));
             services.AddTransient(typeof(IGenericRepository<Otp>), typeof(GenericRepository<Otp, StoreDbContext>));
             services.AddTransient<IUserRepository, UserRepository>();
             #endregion

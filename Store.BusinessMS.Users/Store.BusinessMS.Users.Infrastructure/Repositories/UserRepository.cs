@@ -10,7 +10,7 @@ namespace Store.BusinessMS.Users.Infrastructure.Repositories
 {
     public class UserRepository : GenericRepository<ApplicationUser, StoreDbContext>, IUserRepository
     {
-        public readonly DbSet<ApplicationUser> _aspNetUsers;
+        private readonly DbSet<ApplicationUser> _aspNetUsers;
         private readonly ILogger _logger;
 
         public UserRepository(ILoggerFactory logger, StoreDbContext context) : base(context)
@@ -32,11 +32,6 @@ namespace Store.BusinessMS.Users.Infrastructure.Repositories
                 .ToListAsync();
 
             return new PagedList<ApplicationUser>(items, pageNumber, pageSize, total);
-        }
-
-        public async Task<ApplicationUser?> GetById(string id)
-        {
-            return await _aspNetUsers.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<ApplicationUser?> GetByEmailAsync(string email)
