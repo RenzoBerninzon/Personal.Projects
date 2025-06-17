@@ -9,7 +9,7 @@ namespace Store.BusinessMS.Users.Application.Command.ChangePassword.Request
     public class ChangePasswordRequest
     {
         public string UserId { get; set; }
-        public string OtpCode { get; set; }
+        public string Otp { get; set; }
         public string NewPassword { get; set; }
     }
 }

@@ -10,14 +10,8 @@ namespace Store.BusinessMS.Users.Application.Command.ChangePassword
 {
     public class ChangePassword
     {
-        public class Command : IRequest<Result>
+        public class Command : ChangePasswordRequest, IRequest<Result>
         {
-            public ChangePasswordRequest Request { get; set; }
-
-            public Command(ChangePasswordRequest request)
-            {
-                Request = request;
-            }
         }
 
         public class Handler : IRequestHandler<Command, Result>
@@ -38,7 +32,7 @@ namespace Store.BusinessMS.Users.Application.Command.ChangePassword
 
             public async Task<Result> Handle(Command request, CancellationToken cancellationToken)
             {
-                var req = request.Request;
+                var req = request;
 
                 var user = await _userRepository.GetByIdAsync(req.UserId);
                 if (user == null)
@@ -48,7 +42,7 @@ namespace Store.BusinessMS.Users.Application.Command.ChangePassword
 
                 var currentDateTime = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("SA Pacific Standard Time"));
 
-                var otp = await _otpRepository.GetValidOtpByUserAndCodeAsync(req.UserId, req.OtpCode);
+                var otp = await _otpRepository.GetValidOtpByUserAndCodeAsync(req.UserId, req.Otp);
 
                 if (otp == null)
                 {

@@ -10,6 +10,7 @@ using Store.BusinessMS.Users.Application.Interfaces.Repositories;
 using Store.BusinessMS.Users.Infrastructure.Repositories;
 using Store.BusinessMS.Users.Application.Command.UpdateUser;
 using Store.BusinessMS.Users.Domain.User;
+using Store.BusinessMS.Users.Application.Command.ChangePassword;
 
 var builder = FunctionsApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ var sqlConnectionString = builder.Configuration.GetConnectionString("SqlConnecti
 builder.Services.AddPersistenceInfrastructure(sqlConnectionString);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IGenericRepository<ApplicationUser>, UserRepository>();
+builder.Services.AddScoped<IOtpRepository, OtpRepository>();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetUserById).Assembly));
 builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
